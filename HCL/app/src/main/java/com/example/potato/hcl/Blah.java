@@ -97,7 +97,8 @@ public class Blah extends ActionBarActivity implements View.OnClickListener {
         final EditText edit = (EditText) findViewById(com.example.potato.hcl.R.id.name);
         Editable value = edit.getText();
         String stringed = value.toString();
-        String result = makeGetRequest(stringed);
+        String changed = stringed.replaceAll(" ", "%20");
+        String result = makeGetRequest(changed);
 
         //Create a pop-up dialog to display the result
         AlertDialog.Builder results = new AlertDialog.Builder(this);
@@ -123,7 +124,6 @@ public class Blah extends ActionBarActivity implements View.OnClickListener {
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("name", value));
         // replace with your url
-
 
         HttpResponse response;
         try {
@@ -159,6 +159,6 @@ public class Blah extends ActionBarActivity implements View.OnClickListener {
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result" + e.toString());
         }
-        return "Error!";
+        return "Deepest condolences: There appear to be no entries by that name.";
     }
 }
