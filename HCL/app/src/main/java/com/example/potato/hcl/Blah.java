@@ -97,21 +97,37 @@ public class Blah extends ActionBarActivity implements View.OnClickListener {
         final EditText edit = (EditText) findViewById(com.example.potato.hcl.R.id.name);
         Editable value = edit.getText();
         String stringed = value.toString();
+        stringed=stringed.trim();
         String changed = stringed.replaceAll(" ", "%20");
         String result = makeGetRequest(changed);
 
-        //Create a pop-up dialog to display the result
-        AlertDialog.Builder results = new AlertDialog.Builder(this);
-        results.setTitle("Search Results For: " + stringed);
-        CharSequence message = result;
-        results.setMessage(message);
-        results.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Do nothing, close dialog
-            }
+        if (result.contains("500 Internal Server Error")==true) {
+            AlertDialog.Builder results = new AlertDialog.Builder(this);
+            results.setTitle("Search Results For: " + stringed);
+            CharSequence message = "Name Not Found";
+            results.setMessage(message);
+            results.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Do nothing, close dialog
+                }
 
-        });
-        results.show();
+            });
+            results.show();
+        }
+        else {
+            //Create a pop-up dialog to display the result
+            AlertDialog.Builder results = new AlertDialog.Builder(this);
+            results.setTitle("Search Results For: " + stringed);
+            CharSequence message = result;
+            results.setMessage(message);
+            results.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Do nothing, close dialog
+                }
+
+            });
+            results.show();
+        }
 
         return;
 
